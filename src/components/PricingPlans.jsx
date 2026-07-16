@@ -87,7 +87,7 @@ const plans = [
     name: "Enterprise",
     color: "#0d5b96",
     featured: false,
-    price: "₹4,999",
+    price: "₹6,999",
     duration: "/month",
     products: "Unlimited Products",
     staff: "10+ Staff",
