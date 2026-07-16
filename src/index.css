@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f8fbff;
+  color: #12395b;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #0d5b96;
+  color: white;
+}
