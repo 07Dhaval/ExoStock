@@ -32,7 +32,7 @@ export default function Navbar() {
             </h1>
           </a>
 
-          <span className="ml-1 mt-1 hidden text-[10px] text-gray-900 xs:inline sm:ml-2 sm:mt-2.5 sm:text-sm">
+          <span className="ml-1 mt-1 text-[9px] text-gray-900 sm:ml-2 sm:mt-2.5 sm:text-sm">
             Powered by{" "}
             <a
               href="https://exoticinfotech.com/"
