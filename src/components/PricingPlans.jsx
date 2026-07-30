@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import {
   CheckCircle,
   TrendingUp,
@@ -12,8 +14,8 @@ const plans = [
     name: "Trial",
     color: "#0d5b96",
     featured: false,
-    price: "Free",
-    duration: "7 Days",
+    price: "Free 7 Days",
+    duration: "",
     products: "50 Products",
     staff: "1 Staff",
     franchise: "0 Franchise",
@@ -22,13 +24,19 @@ const plans = [
     icon: Gift,
     button: "Start Free Trial",
   },
-
   {
     name: "Basic",
     color: "#0d5b96",
     featured: false,
-    price: "₹799",
-    duration: "/month",
+    monthlyPrice: {
+      INR: "₹799",
+      USD: "$9",
+    },
+
+    yearlyPrice: {
+      INR: "₹7,990",
+      USD: "$79",
+    },
     products: "200 Products",
     staff: "1 Staff",
     franchise: "0 Franchise",
@@ -47,8 +55,15 @@ const plans = [
     name: "Standard",
     color: "#0d5b96",
     featured: true,
-    price: "₹1,999",
-    duration: "/month",
+    monthlyPrice: {
+      INR: "₹1,999",
+      USD: "$9",
+    },
+
+    yearlyPrice: {
+      INR: "₹7,990",
+      USD: "$79",
+    },
     products: "500 Products",
     staff: "3 Staff",
     franchise: "1 Franchise",
@@ -67,8 +82,14 @@ const plans = [
     name: "Business",
     color: "#0d5b96",
     featured: false,
-    price: "₹2,999",
-    duration: "/month",
+    monthlyPrice: {
+      INR: "₹2,999",
+      USD: "$39",
+    },
+    yearlyPrice: {
+      INR: "₹29,990",
+      USD: "$390",
+    },
     products: "1000 Products",
     staff: "5 Staff",
     franchise: "5 Franchise",
@@ -87,8 +108,14 @@ const plans = [
     name: "Enterprise",
     color: "#0d5b96",
     featured: false,
-    price: "₹6,999",
-    duration: "/month",
+    monthlyPrice: {
+      INR: "₹6,999",
+      USD: "$99",
+    },
+    yearlyPrice: {
+      INR: "₹69,990",
+      USD: "$990",
+    },
     products: "Unlimited Products",
     staff: "10+ Staff",
     franchise: "10 Franchise",
@@ -107,8 +134,15 @@ const plans = [
     name: "Custom",
     color: "#0d5b96",
     featured: false,
-    price: "Custom",
-    duration: "/month",
+    monthlyPrice: {
+      INR: "Custom",
+      USD: "Custom",
+    },
+
+    yearlyPrice: {
+      INR: "Custom",
+      USD: "Custom",
+    },
     products: "Unlimited Products",
     staff: "Unlimited Staff",
     franchise: "Unlimited Franchise",
@@ -125,6 +159,8 @@ const plans = [
 ];
 
 export default function PricingPlans() {
+  const [billing, setBilling] = useState("monthly");
+  const [currency, setCurrency] = useState("INR");
   return (
     <section className="bg-[#f7f8fc] py-16 lg:py-20">
       <div className="mx-auto max-w-screen-2xl px-4 sm:px-6 lg:px-8">
@@ -146,6 +182,60 @@ export default function PricingPlans() {
             distributors and enterprise businesses.
           </p>
         </div>
+        <div className="mb-12 flex flex-col items-center gap-4 lg:flex-row lg:justify-center lg:gap-8">
+          {/* Billing Switch */}
+          <div className="flex items-center rounded-full border border-[#0d5b96] bg-white p-2 shadow-lg">
+            <button
+              onClick={() => setBilling("monthly")}
+              className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
+                billing === "monthly"
+                  ? "bg-[#0d5b96] text-white"
+                  : "text-[#0d5b96]"
+              }`}
+            >
+              Monthly
+            </button>
+
+            <button
+              onClick={() => setBilling("yearly")}
+              className={`relative rounded-full px-6 py-2 text-sm font-semibold transition ${
+                billing === "yearly"
+                  ? "bg-[#0d5b96] text-white"
+                  : "text-[#0d5b96]"
+              }`}
+            >
+              Yearly
+              <span className="absolute -top-3 -right-2 rounded-full bg-green-500 px-2 py-0.5 text-[10px] font-bold text-white">
+                2 Months FREE
+              </span>
+            </button>
+          </div>
+
+          {/* Currency Switch */}
+          {/* <div className="flex items-center rounded-full border border-[#0d5b96] bg-white p-2 shadow-lg">
+            <button
+              onClick={() => setCurrency("INR")}
+              className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
+                currency === "INR"
+                  ? "bg-[#0d5b96] text-white"
+                  : "text-[#0d5b96]"
+              }`}
+            >
+              ₹ INR
+            </button>
+
+            <button
+              onClick={() => setCurrency("USD")}
+              className={`rounded-full px-6 py-2 text-sm font-semibold transition ${
+                currency === "USD"
+                  ? "bg-[#0d5b96] text-white"
+                  : "text-[#0d5b96]"
+              }`}
+            >
+              $ USD
+            </button>
+          </div> */}
+        </div>
 
         {/* Responsive Grid */}
 
@@ -156,29 +246,33 @@ export default function PricingPlans() {
             return (
               <div
                 key={index}
-                className={`snap-center min-w-[290px] lg:min-w-0 overflow-hidden rounded-2xl border bg-white transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl ${
+                className={`mt-7.5 snap-center min-w-72.5 lg:min-w-0 overflow-hidden rounded-2xl border bg-white transition-all duration-300 hover:shadow-2xl ${
                   plan.featured
-                    ? "border-2 border-[#0d5b96] shadow-2xl lg:-translate-y-8 z-10"
-                    : "border-[#0d5b96]"
+                    ? "border-2 border-[#0d5b96] shadow-2xl lg:-translate-y-8 lg:hover:-translate-y-10 z-10"
+                    : "border-[#0d5b96] hover:-translate-y-2"
                 }`}
               >
                 {/* Top Header */}
 
-                <div className="h-[88px]">
+                <div className="mt-[-25px] h-[88px]">
                   {plan.featured ? (
                     <>
                       {/* Most Popular Strip */}
-                      <div className="flex h-[44px] items-center justify-center bg-[#0d5b96]">
+                      <div className="mt-[25px] flex h-[44px] items-center justify-center bg-[#0d5b96]">
                         <span className="text-sm font-bold uppercase tracking-wider text-white">
                           MOST POPULAR
                         </span>
                       </div>
 
                       {/* Plan Name */}
-                      <div className="flex h-[44px] items-center justify-center bg-white">
-                        <h3 className="text-2xl font-bold uppercase tracking-wide text-[#0d5b96]">
-                          {plan.name}
-                        </h3>
+                      <div className="mt-[10px] flex h-[44px] items-center justify-center bg-white ">
+                        <div className="flex flex-col items-center">
+                          <h3 className="text-[30px] font-black leading-none text-[#0d5b96]">
+                            {plan.name}
+                          </h3>
+
+                          <div className="mt-2 h-1 w-16 rounded-full bg-[#0d5b96]"></div>
+                        </div>
                       </div>
                     </>
                   ) : (
@@ -188,9 +282,13 @@ export default function PricingPlans() {
 
                       {/* Plan Name */}
                       <div className="flex h-[44px] items-center justify-center bg-white">
-                        <h3 className="text-2xl font-bold uppercase tracking-wide text-[#0d5b96]">
-                          {plan.name}
-                        </h3>
+                        <div className="flex flex-col items-center">
+                          <h3 className="text-[30px] font-black leading-none text-[#0d5b96]">
+                            {plan.name}
+                          </h3>
+
+                          <div className="mt-2 h-1 w-16 rounded-full bg-[#0d5b96]"></div>
+                        </div>
                       </div>
                     </>
                   )}
@@ -202,13 +300,21 @@ export default function PricingPlans() {
                   {/* Price */}
 
                   <div className="text-center">
-                    <h2 className="text-3xl font-extrabold text-[#0d5b96] lg:text-4xl">
-                      {plan.price}
+                    <h2 className="text-3xl font-extrabold text-[#0d5b96] lg:text-2xl">
+                      {plan.name === "Trial"
+                        ? plan.price
+                        : billing === "monthly"
+                          ? plan.monthlyPrice[currency]
+                          : plan.yearlyPrice[currency]}
                     </h2>
 
                     {plan.duration && (
                       <p className="mt-2 text-base text-gray-500">
-                        {plan.duration}
+                        {plan.name === "Trial"
+                          ? plan.duration
+                          : billing === "monthly"
+                            ? "/month"
+                            : "/year"}
                       </p>
                     )}
                   </div>
@@ -233,7 +339,7 @@ export default function PricingPlans() {
                         size={20}
                         className="text-green-600 flex-shrink-0"
                       />
-                      <span className="text-gray-700 font-medium">
+                      <span className="text-[#0d5b96] font-medium">
                         {plan.products}
                       </span>
                     </div>
@@ -243,7 +349,7 @@ export default function PricingPlans() {
                         size={20}
                         className="text-green-600 flex-shrink-0"
                       />
-                      <span className="text-gray-700 font-medium">
+                      <span className="text-[#0d5b96] font-medium">
                         {plan.staff}
                       </span>
                     </div>
@@ -253,7 +359,7 @@ export default function PricingPlans() {
                         size={20}
                         className="text-green-600 flex-shrink-0"
                       />
-                      <span className="text-gray-700 font-medium">
+                      <span className="text-[#0d5b96] font-medium">
                         {plan.franchise}
                       </span>
                     </div>
@@ -266,7 +372,7 @@ export default function PricingPlans() {
                   {/* Features */}
 
                   <div className="flex-1 min-h-[150px]">
-                    <h4 className="mb-5 text-lg font-bold text-gray-900">
+                    <h4 className="mb-5 text-lg font-bold text-[#0d5b96]">
                       Included Features
                     </h4>
 
@@ -278,7 +384,7 @@ export default function PricingPlans() {
                             className="mt-1 flex-shrink-0 text-green-600"
                           />
 
-                          <span className="text-[13px] leading-5 text-gray-600">
+                          <span className="text-[13px] leading-5 text-[#0d5b96]">
                             {feature}
                           </span>
                         </li>
@@ -294,7 +400,7 @@ export default function PricingPlans() {
                         <Icon size={20} className="text-[#0d5b96]" />
                       </div>
 
-                      <p className="text-sm leading-6 text-gray-600">
+                      <p className="text-sm leading-6 text-[#0d5b96]">
                         {plan.description}
                       </p>
                     </div>

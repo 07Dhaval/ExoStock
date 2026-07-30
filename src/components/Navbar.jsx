@@ -14,15 +14,25 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white bg-white">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:h-20 sm:px-6 lg:px-8">
-        {/* Logo */}
+      <style>{`
+        .snake-arrow {
+          display: inline-block;
+          transition: transform 0.3s ease;
+        }
+        a:hover .snake-arrow {
+          transform: translateX(4px);
+        }
+      `}</style>
 
-        <a href="/" className="flex items-center">
-          <h1 className="text-lg font-bold tracking-tight text-gray-900 sm:text-xl lg:text-3xl">
-            Exo<span className="text-[#0d5b96]">Stock</span>
-          </h1>
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-3 sm:h-20 sm:px-6 lg:px-8">
+        <div className="flex min-w-0 items-center">
+          <a href="/" className="flex items-center">
+            <h1 className="truncate text-base font-bold tracking-tight text-gray-900 xs:text-lg sm:text-xl lg:text-3xl">
+              Exo<span className="text-[#0d5b96]">Stock</span>
+            </h1>
+          </a>
 
-          <span className="ml-1 mt-1 text-[10px] text-gray-900 sm:ml-2 sm:mt-2.5 sm:text-sm">
+          <span className="ml-1 mt-1 hidden text-[10px] text-gray-900 xs:inline sm:ml-2 sm:mt-2.5 sm:text-sm">
             Powered by{" "}
             <a
               href="https://exoticinfotech.com/"
@@ -33,11 +43,9 @@ export default function Navbar() {
               Exotic Infotech
             </a>
           </span>
-        </a>
+        </div>
 
-        {/* Desktop Menu */}
-
-        <nav className="hidden items-center gap-6 xl:gap-10 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-10">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -49,57 +57,70 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* Desktop Button */}
+        <div className="hidden items-center gap-3 lg:flex">
+          <a
+            href="#login"
+            className="inline-flex items-center rounded-xl border border-[#0d5b96] px-5 py-3 text-sm font-semibold text-[#0d5b96] transition-all duration-300 hover:-translate-y-1 hover:bg-[#0d5b96]/10"
+          >
+            Login
+          </a>
 
-        <div className="hidden lg:block">
           <a
             href="#contact"
-            className="rounded-xl bg-[#0d5b96] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0d5b96]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#0d5b96]/80"
+            className="inline-flex items-center rounded-xl bg-[#0d5b96] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-[#0d5b96]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#0d5b96]/80"
           >
-            Get Free Demo →
+            Register Account
+            <span className="ml-2 snake-arrow">➜</span>
           </a>
         </div>
 
-        {/* Mobile Menu Button */}
-
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="rounded-xl border border-gray-200 p-2 transition lg:hidden"
+          className="shrink-0 rounded-xl border border-gray-200 p-2 transition lg:hidden"
         >
           {isOpen ? (
-            <X className="h-6 w-6 text-gray-800" />
+            <X className="h-5 w-5 text-gray-800 sm:h-6 sm:w-6" />
           ) : (
-            <Menu className="h-6 w-6 text-gray-800" />
+            <Menu className="h-5 w-5 text-gray-800 sm:h-6 sm:w-6" />
           )}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-
       <div
         className={`overflow-hidden bg-white transition-all duration-300 lg:hidden ${
-          isOpen ? "max-h-[420px] border-t border-gray-200" : "max-h-0"
+          isOpen ? "max-h-[480px] border-t border-gray-200" : "max-h-0"
         }`}
       >
-        <div className="flex flex-col px-5 py-4">
+        <div className="flex flex-col px-4 py-4 sm:px-5">
           {navItems.map((item) => (
             <a
               key={item.name}
               href={item.href}
               onClick={() => setIsOpen(false)}
-              className="border-b border-gray-100 py-4 text-base font-medium text-gray-700 transition hover:text-[#0d5b96]"
+              className="border-b border-gray-100 py-3.5 text-base font-medium text-gray-700 transition hover:text-[#0d5b96] sm:py-4"
             >
               {item.name}
             </a>
           ))}
 
-          <a
-            href="#contact"
-            onClick={() => setIsOpen(false)}
-            className="mt-5 rounded-xl bg-[#0d5b96] py-3 text-center text-base font-semibold text-white transition-all duration-300 hover:bg-[#0d5b96]"
-          >
-            Get Free Demo →
-          </a>
+          <div className="mt-4 flex flex-col gap-3">
+            <a
+              href="#login"
+              onClick={() => setIsOpen(false)}
+              className="inline-flex items-center justify-center rounded-xl border border-[#0d5b96] py-3 text-center text-base font-semibold text-[#0d5b96] transition-all duration-300 hover:-translate-y-1 hover:bg-[#0d5b96]/10"
+            >
+              Login
+            </a>
+
+            <a
+              href="#contact"
+              onClick={() => setIsOpen(false)}
+              className="inline-flex items-center justify-center rounded-xl bg-[#0d5b96] py-3 text-center text-base font-semibold text-white shadow-lg shadow-[#0d5b96]/20 transition-all duration-300 hover:-translate-y-1 hover:bg-[#0d5b96]/80"
+            >
+              Register Account
+              <span className="ml-2 snake-arrow">➜</span>
+            </a>
+          </div>
         </div>
       </div>
     </header>

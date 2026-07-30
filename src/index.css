@@ -11,3 +11,21 @@ body {
   background: #0d5b96;
   color: white;
 }
+
+@keyframes snakeArrow {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(12px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.snake-arrow {
+  display: inline-block;
+  animation: snakeArrow 0.8s ease-in-out infinite;
+}
+
